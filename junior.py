@@ -63,10 +63,7 @@ if(__name__=="__main__"):
     greetMe()
     while True:
         query=Command().lower()
-        if 'hi' in query or 'hello' in query:
-            speak("hello and welcome!")
-
-        elif 'wikipedia' in query:
+        if 'wikipedia' in query:
             speak('Searching the WIKIPEDIA....')
             query=query.replace("wikipedia","")
             results=wikipedia.summary(query,sentences=3)
@@ -156,7 +153,7 @@ if(__name__=="__main__"):
                 #print(e)
                 print("Sorry some error occurred.")
             
-        elif 'sports news' in query :
+        elif 'sports news' in query or 'sports' in query:
             url=('http://newsapi.org/v2/top-headlines?'
                 'country=in&'
                 'category=sports&'
@@ -176,7 +173,22 @@ if(__name__=="__main__"):
                 speaknews("no new update for news")
                 print("no new update for news") 
 
-        elif 'india news' in query or 'news from india' in query:
+        elif 'joke' in query or 'jokes' in query:
+            url="https://official-joke-api.appspot.com/random_joke"
+            r=requests.get(url)
+            texts=r.text
+            parsedjoke=json.loads(texts)
+            n=len(parsedjoke)
+            if n!=0: 
+                    print(parsedjoke["setup"])
+                    speak(parsedjoke["setup"])
+                    print(parsedjoke["punchline"])
+                    speak(parsedjoke["punchline"])
+            else:
+                print("No joke for now!")
+                speak("No joke for now!")
+
+        elif 'india news' in query or 'news from india' in query or 'news of india' in query:
             url=('http://newsapi.org/v2/top-headlines?'
                 'country=in&'
                 'apiKey=a14fc394cf6f46f3a452842b4288d4f0')
@@ -219,3 +231,6 @@ if(__name__=="__main__"):
             speak("Thank you and gooooooood to work with you.") 
             print("Thank you and gooooooood to work with you.") 
             exit()
+
+        elif 'hi' in query or 'hello' in query:
+            speak("hello and welcome!")
